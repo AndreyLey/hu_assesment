@@ -16,16 +16,16 @@ namespace Form_Builder.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class FormController : ControllerBase
+    public class FormsController : ControllerBase
     {
         private readonly IFormManager _formManager;
 
-        public FormController(IFormManager formManager)
+        public FormsController(IFormManager formManager)
         {
             _formManager = formManager;
         }
 
-        // GET: form/1
+        // GET: forms/1
         [HttpGet ("{id}")]
         public IActionResult Get(string id)
         {
@@ -35,14 +35,14 @@ namespace Form_Builder.Controllers
         }
 
 
-        //// GET api/<ValuesController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET forms
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return new JsonResult(_formManager.GetFormsSummary());
+        }
 
-        // POST api/<ValuesController>
+        // POST forms
         [HttpPost]
         public void Post([FromBody] Form form)
         {
@@ -51,7 +51,7 @@ namespace Form_Builder.Controllers
             //var converted = JsonConvert.DeserializeObject<Form>(request);
         }
 
-        // PUT form/1
+        // PUT forms/1
         [HttpPut("{id}")]
         public void Put( string id, [FromBody] Submission value)
         {

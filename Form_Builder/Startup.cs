@@ -32,6 +32,14 @@ namespace Form_Builder
             services.AddSingleton<IDbSetting>(sp => sp.GetRequiredService<IOptions<DbSetting>>().Value);     
             services.AddSingleton<IDBAccessLayer, MongoDbAccessLayer>();
             services.AddSingleton<IFormManager, FormManager>();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000");
+                    });
+            });
             services.AddControllers();
         }
 
@@ -44,7 +52,7 @@ namespace Form_Builder
             }
 
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

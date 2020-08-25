@@ -14,6 +14,7 @@ namespace Form_Builder.Services
         List<InputType> GetTypes();
         Form GetFormById(string id);
         FormSummaryResponse GetFormSummaryById(string id);
+        List<FormSummaryResponse> GetFormsSummary();
         bool SaveForm(Form form);
         List<Submission> GetSubmissions();
         bool SaveSubmission(string id, Submission submission);

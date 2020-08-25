@@ -30,6 +30,24 @@ namespace Form_Builder.Services
                 return null;
         }
 
+        public List<FormSummaryResponse> GetFormsSummary()
+        {
+            var forms = _dBAccessLayer.GetForms();
+            List<FormSummaryResponse> formsSummaryResponse = new List<FormSummaryResponse>();
+
+            Console.WriteLine("In Get Form Manager");
+            forms.ForEach(form=>
+                formsSummaryResponse.Add(new FormSummaryResponse()
+                {
+                    Id = form.Id,
+                    FormName = form.Form_name,
+                    Submissions = form.Submissions_Ids.Count()
+                })
+            );
+
+            return formsSummaryResponse;
+        }
+
         public FormSummaryResponse GetFormSummaryById(string id)
         {
             if (!String.IsNullOrEmpty(id))

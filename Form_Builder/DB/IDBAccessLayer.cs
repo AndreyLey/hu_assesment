@@ -1,4 +1,5 @@
 ﻿using Form_Builder.Model;
+using Form_Builder.Model.Out;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Form_Builder.DB
     public interface IDBAccessLayer
     {
         List<InputType> GetTypes();
+        List<Form> GetForms();
         Form GetForm(string id);
         bool SaveForm(Form form);
         List<Submission> GetSubmissions();

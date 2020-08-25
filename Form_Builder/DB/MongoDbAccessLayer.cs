@@ -1,5 +1,6 @@
 ﻿using Form_Builder.DB;
 using Form_Builder.Model;
+using Form_Builder.Model.Out;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -43,9 +44,15 @@ namespace SearchEngine.DB
             Console.WriteLine("MongoDbAccessLayer Initialized");
         }
 
+        public List<Form> GetForms()
+        {
+            var allForms = (from form in _forms.AsQueryable() select form);
+            return allForms.ToList();
+        }
+
         public Form GetForm(string id)
         {
-            return (from type in _forms.AsQueryable() where type.Id==id select type).FirstOrDefault();
+            return (from form in _forms.AsQueryable() where form.Id==id select form).FirstOrDefault();
 
             //throw new NotImplementedException();
         }
