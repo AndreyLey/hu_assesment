@@ -37,7 +37,7 @@ namespace Form_Builder
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000");
+                        builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                     });
             });
             services.AddControllers();

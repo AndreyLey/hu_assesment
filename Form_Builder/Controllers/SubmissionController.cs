@@ -23,9 +23,7 @@ namespace Form_Builder.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-
             return new JsonResult(_formManager.GetTypes());
-            //return new string[] { "value1", "value2" };
         }
 
         // GET api/<SubmissionController>/5

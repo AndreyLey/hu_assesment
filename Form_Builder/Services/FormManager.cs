@@ -71,6 +71,19 @@ namespace Form_Builder.Services
             throw new NotImplementedException();
         }
 
+        public List<Submission> GetSubmissionsByFormId(string id)
+        {
+            Console.WriteLine("In Get Submissions By FormId");
+            var submissionIds = _dBAccessLayer.GetForm(id).Submissions_Ids;
+            var submissionsById = _dBAccessLayer.GetSubmissions(submissionIds);
+            return submissionsById;
+            //return new SubmissionResponse()
+            //{
+            //    Submissions = submissionsById
+            //};
+            //throw new NotImplementedException();
+        }
+
         public List<InputType> GetTypes()
         {
             Console.WriteLine("In Get Types");

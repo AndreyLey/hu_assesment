@@ -18,5 +18,7 @@ namespace Form_Builder.Services
         bool SaveForm(Form form);
         List<Submission> GetSubmissions();
         bool SaveSubmission(string id, Submission submission);
+
+        List<Submission> GetSubmissionsByFormId(string id);
     }
 }

@@ -57,9 +57,11 @@ namespace SearchEngine.DB
             //throw new NotImplementedException();
         }
 
-        public List<Submission> GetSubmissions()
+        public List<Submission> GetSubmissions(List<string> ids)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Submission>.Filter.In(x => x.Id, ids);
+            return _submissions.Find(filter).ToList();
+            //throw new NotImplementedException();
         }
 
         public List<InputType> GetTypes()

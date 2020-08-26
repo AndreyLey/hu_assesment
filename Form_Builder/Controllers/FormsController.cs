@@ -52,13 +52,19 @@ namespace Form_Builder.Controllers
         }
 
         // PUT forms/1
-        [HttpPut("{id}")]
+        [HttpPut("{id}/submission")]
         public void Put( string id, [FromBody] Submission value)
         {
             _formManager.SaveSubmission(id, value);
 
         }
 
+        [HttpGet("{id}/submissions")]
+        public IActionResult GetSubmissions(string id)
+        {
+            return new JsonResult(_formManager.GetSubmissionsByFormId(id));
+
+        }
         // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
