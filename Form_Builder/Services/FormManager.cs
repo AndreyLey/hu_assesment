@@ -77,11 +77,6 @@ namespace Form_Builder.Services
             var submissionIds = _dBAccessLayer.GetForm(id).Submissions_Ids;
             var submissionsById = _dBAccessLayer.GetSubmissions(submissionIds);
             return submissionsById;
-            //return new SubmissionResponse()
-            //{
-            //    Submissions = submissionsById
-            //};
-            //throw new NotImplementedException();
         }
 
         public List<InputType> GetTypes()
@@ -97,7 +92,6 @@ namespace Form_Builder.Services
                 Console.Write($"GetTypes: {e}");
             }
             return types;
-            //throw new NotImplementedException();
         }
 
         public bool SaveForm(Form form)
@@ -122,7 +116,6 @@ namespace Form_Builder.Services
                 return true;
             }
             return false;
-            //throw new NotImplementedException();
         }
     }
 }

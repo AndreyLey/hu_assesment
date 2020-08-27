@@ -9,12 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Newtonsoft.Json;
 
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Form_Builder.Controllers
 {
-    [Route("[controller]")]
+    [Route("")]
     [ApiController]
     public class FormsController : ControllerBase
     {
@@ -26,49 +23,45 @@ namespace Form_Builder.Controllers
         }
 
         // GET: forms/1
-        [HttpGet ("{id}")]
+        [HttpGet ("forms/{id}")]
         public IActionResult Get(string id)
         {
             return new JsonResult(_formManager.GetFormById(id));
-            //return new string[] { "value1", "value2" };
-
         }
 
-
-        // GET forms
-        [HttpGet]
+        // GET
+        [HttpGet("forms")]
         public IActionResult Get()
         {
             return new JsonResult(_formManager.GetFormsSummary());
         }
 
-        // POST forms
-        [HttpPost]
+        // POST
+        [HttpPost("forms")]
         public void Post([FromBody] Form form)
         {
             _formManager.SaveForm(form);
-            //var request = HttpContext.Request.Body.ToString();
-            //var converted = JsonConvert.DeserializeObject<Form>(request);
         }
 
-        // PUT forms/1
-        [HttpPut("{id}/submission")]
+        // PUT
+        [HttpPut("forms/{id}/submission")]
         public void Put( string id, [FromBody] Submission value)
         {
             _formManager.SaveSubmission(id, value);
 
         }
 
-        [HttpGet("{id}/submissions")]
+        [HttpGet("forms/{id}/submissions")]
         public IActionResult GetSubmissions(string id)
         {
             return new JsonResult(_formManager.GetSubmissionsByFormId(id));
 
         }
-        // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        [HttpGet("types")]
+        public IActionResult GetTypes()
         {
+            return new JsonResult(_formManager.GetTypes());
         }
     }
 }

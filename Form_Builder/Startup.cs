@@ -25,7 +25,6 @@ namespace Form_Builder
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DbSetting>(Configuration.GetSection(nameof(DbSetting)));
@@ -37,13 +36,12 @@ namespace Form_Builder
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                        builder.AllowAnyOrigin().WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
                     });
             });
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

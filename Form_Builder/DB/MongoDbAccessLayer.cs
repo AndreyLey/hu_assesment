@@ -53,15 +53,12 @@ namespace SearchEngine.DB
         public Form GetForm(string id)
         {
             return (from form in _forms.AsQueryable() where form.Id==id select form).FirstOrDefault();
-
-            //throw new NotImplementedException();
         }
 
         public List<Submission> GetSubmissions(List<string> ids)
         {
             var filter = Builders<Submission>.Filter.In(x => x.Id, ids);
             return _submissions.Find(filter).ToList();
-            //throw new NotImplementedException();
         }
 
         public List<InputType> GetTypes()
@@ -83,7 +80,6 @@ namespace SearchEngine.DB
                 return true;
             }
             catch { throw; }
-            //throw new NotImplementedException();
         }
 
         public bool SaveSubmission(string id, Submission submission)
@@ -97,62 +93,6 @@ namespace SearchEngine.DB
                 return true;
             }
             catch { throw; }
-            //throw new NotImplementedException();
         }
-
-        //public List<Document> GetAllDocuments()
-        //{
-        //    return _documents.Find(doc => true).ToList();
-        //}
-
-        //public bool WriteDataToDB(Dictionary<string, Word> words, Dictionary<string, Document> documents)
-        //{
-        //    try
-        //    {
-        //        WriteToDocuments(documents);
-        //        WriteToWords(words);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw;
-        //    }
-        //    return true;
-        //}
-
-        //private void WriteToDocuments(Dictionary<string, Document> documents)
-        //{
-        //    _documents.InsertManyAsync(documents.Values.ToList());
-        //}
-
-        //private void WriteToWords(Dictionary<string, Word> wordsToWrite)
-        //{
-        //    _words.InsertManyAsync(wordsToWrite.Values.ToList());
-        //}
-
-        //public Word FindWord(string wordToSearch)
-        //{
-        //    try
-        //    {
-        //        var word = _words.Find<Word>(w => w.word.Equals(wordToSearch)).FirstOrDefault();
-        //        return word;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw;
-        //    }
-        //}
-
-        //public Document FindDocumentById(string id)
-        //{
-        //    try
-        //    {
-        //        var document = _documents.Find<Document>(doc => doc.Id.Equals(id.ToLower())).FirstOrDefault();
-        //        return document;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw;
-        //    }
-        //}
     }
 }

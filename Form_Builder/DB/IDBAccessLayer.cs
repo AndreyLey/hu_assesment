@@ -16,6 +16,5 @@ namespace Form_Builder.DB
         bool SaveForm(Form form);
         List<Submission> GetSubmissions(List<string> ids);
         bool SaveSubmission(string id, Submission submission);
-        //List<Submission> GetSubmissionsByFormId()
     }
 }
