@@ -28,12 +28,14 @@ namespace SearchEngine.DB
         IMongoCollection<Form> _forms;
         IMongoCollection<Submission> _submissions;
 
+        private static readonly Object formsLock = new Object();
 
 
-        public MongoDbAccessLayer(IDbSetting settings)
+
+        public MongoDbAccessLayer(IDbSetting settings, DbConnectionString dbConnectionString)
         {
             _settings = settings;
-            _client = new MongoClient(settings.ConnectionString);
+            _client = new MongoClient($"mongodb://{dbConnectionString.DbHost}:{dbConnectionString.DbPort}");
             var database = _client.GetDatabase(_settings.DatabaseName);
             _inputTypes = database.GetCollection<InputType>(_settings.InputTypeCollectionName);
             _forms = database.GetCollection<Form>(_settings.FormCollectionName);
@@ -46,8 +48,12 @@ namespace SearchEngine.DB
 
         public List<Form> GetForms()
         {
-            var allForms = (from form in _forms.AsQueryable() select form);
-            return allForms.ToList();
+            List<Form> forms = new List<Form>();
+            lock (formsLock)
+            {
+                 forms = (from form in _forms.AsQueryable() select form).ToList();
+            }
+            return forms;
         }
 
         public Form GetForm(string id)

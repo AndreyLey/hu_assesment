@@ -12,7 +12,7 @@ namespace Form_Builder.Services
     public interface IFormManager
     {
         List<InputType> GetTypes();
-        Form GetFormById(string id);
+        Task<Form> GetFormById(string id);
         FormSummaryResponse GetFormSummaryById(string id);
         List<FormSummaryResponse> GetFormsSummary();
         bool SaveForm(Form form);

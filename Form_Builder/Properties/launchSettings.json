@@ -21,6 +21,8 @@
       "commandName": "Project",
       "launchUrl": "weatherforecast",
       "environmentVariables": {
+        "DB_PORT": "27017",
+        "DB_HOST": "localhost",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5050"
