@@ -4,6 +4,7 @@ import { useForm} from "react-hook-form";
 const FieldForm=(props)=>{
   const { register, handleSubmit, errors } = useForm();
   const [submitDisable, setSubmitDisable] = useState(false);
+
   const onSaveClick = data =>
   {
     console.log(data);
@@ -12,7 +13,7 @@ const FieldForm=(props)=>{
   }
 
   return (
-    <div key={props.fromKey} >
+    <div key={props.formKey} >
       <form key={props.formKey} onSubmit={handleSubmit(onSaveClick)}>
           <label htmlFor='label'>Field Labe:
                   <input type='text' id='label' name='label' ref={register({ required: true})}></input>

@@ -11,8 +11,8 @@ function Submited(props) {
     const loadContent = async()=>{
       try{
         var url='';
-        console.log(url.concat('http://localhost:5050/forms/',props.form_id,'/submissions'));
-        const response = await fetch(url.concat('http://localhost:5050/forms/', props.form_id,'/submissions'));//,props.region,'/countries/',props.country));//"http://localhost:5000/regions/Europe/countries/german");
+        console.log(url.concat(props.url,'forms/',props.form_id,'/submissions'));
+        const response = await fetch(url.concat(props.url,'forms/', props.form_id,'/submissions'));//,props.region,'/countries/',props.country));//"http://localhost:5000/regions/Europe/countries/german");
         const json = await response.json();
         console.log(json);
         console.log(json[0].submitedFields);

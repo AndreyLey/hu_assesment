@@ -9,24 +9,25 @@ import Submited from './Submited/Submited';
 function App(props) {
   const history = useHistory();
   const [form_Id, setFormId]=useState('');
-  const [country, setCountry] =useState('Israel');
+  const [url, setUrl] = useState('http://localhost:5050/');
+  console.log(url);
     return (
       <Router>
         <Switch>
           <Route exact path="/">
-            <FormSummary  setFormId={setFormId} />
+            <FormSummary url={url} setFormId={setFormId} />
           </Route>
           
           <Route path="/form_builder">
-            <FormBuilder form_id={form_Id} history={history}/>
+            <FormBuilder url={url} form_id={form_Id} history={history}/>
           </Route>
 
           <Route path="/submission">
-            <Submission form_id={form_Id} history={history}/>
+            <Submission url={url} form_id={form_Id} history={history}/>
           </Route>
 
           <Route path="/submited">
-            <Submited form_id={form_Id}/>
+            <Submited url={url} form_id={form_Id}/>
           </Route>
         </Switch>
       </Router>

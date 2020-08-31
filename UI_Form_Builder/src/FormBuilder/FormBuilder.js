@@ -21,8 +21,8 @@ function FormBuilder(props) {
 
   const AddFields =()=>{
     console.log('Add new field');
-  setFormKey(formKey+1);
-  setFields([...fields, <FieldForm types={types} formKey={formKey} callback={callback}/>]);
+    setFormKey(formKey+1);
+    setFields([...fields, <FieldForm types={types} formKey={formKey} callback={callback}/>]);
   }
   
   const onFormSubmit = data =>{
@@ -36,15 +36,15 @@ function FormBuilder(props) {
     }
     console.log(JSON.stringify(newForm));
     sendContent(newForm);
-    router.goBack();
+    router.push('/');
   }
 
   const sendContent = async(toSend)=>{
     try{
       console.log(toSend);
       var url='';
-      console.log('http://localhost:5050/forms');
-      const response = await fetch('http://localhost:5050/forms',
+      console.log(url.concat(props.url,'forms/'));
+      const response = await fetch(url.concat(props.url,'forms/'),
         {method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -62,8 +62,8 @@ function FormBuilder(props) {
   const loadContent = async()=>{
     try{
       var url='';
-      console.log(url.concat('http://localhost:5050/types/'));
-      const response = await fetch(url.concat('http://localhost:5050/types'));
+      console.log(url.concat(url.concat(props.url,'types/')));
+      const response = await fetch(url.concat(props.url,'types/'));
       const json = await response.json();
       console.log(json);
       setTypes(json);

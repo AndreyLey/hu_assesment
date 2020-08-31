@@ -16,8 +16,8 @@ function FormSummary(props) {
   const loadContent = async()=>{
     try{
       var url='';
-      console.log(url.concat('http://localhost:5050/regions/forms'));
-      const response = await fetch(url.concat('http://localhost:5050/forms'));
+      console.log(url.concat(props.url,'forms/'));
+      const response = await fetch(url.concat(props.url,'forms/'));
       const json = await response.json();
       console.log(json);
       setForms(json);

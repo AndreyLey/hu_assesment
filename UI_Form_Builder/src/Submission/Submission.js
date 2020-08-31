@@ -21,15 +21,15 @@ function Submission(props) {
       submission.submitedfields[i]={'field':fields[i], 'value': value }
     }
     sendContent(submission);
-    router.goBack();
+    router.push('/');
   };
 
   const sendContent = async(toSend)=>{
     try{
       console.log(toSend);
       var url='';
-      console.log(url.concat('http://localhost:5050/forms/',props.form_id,'/submission'));
-      const response = await fetch(url.concat('http://localhost:5050/forms/', props.form_id,'/submission'),
+      console.log(url.concat(props.url,'forms/',props.form_id,'/submission'));
+      const response = await fetch(url.concat(props.url,'forms/', props.form_id,'/submission'),
         {method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -48,8 +48,8 @@ function Submission(props) {
   const loadContent = async()=>{
     try{
       var url='';
-      console.log(url.concat('http://localhost:5050/forms/',props.form_id));
-      const response = await fetch(url.concat('http://localhost:5050/forms/', props.form_id));
+      console.log(url.concat(props.url,'forms/',props.form_id));
+      const response = await fetch(url.concat(props.url,'forms/', props.form_id));
       const json = await response.json();
       console.log(json.fields);
       setFields(json.fields);
@@ -69,7 +69,7 @@ function Submission(props) {
 
      return (
       <div>
-        <form /*action='/'*/ onSubmit={handleSubmit(onSubmit)}>
+        <form  onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field,i)=>
             <div key={i}>
               <label htmlFor={field.input_Name}>{field.label}:<br/>
@@ -77,6 +77,7 @@ function Submission(props) {
               </label><br/>
             </div>
           )}
+          <button onClick={() => {router.goBack()}}>Back</button>
           <input type="submit" value="Submit"/>
         </form>
     </div>
