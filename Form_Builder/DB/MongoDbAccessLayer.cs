@@ -28,9 +28,6 @@ namespace SearchEngine.DB
         IMongoCollection<Form> _forms;
         IMongoCollection<Submission> _submissions;
 
-        private static readonly Object formsLock = new Object();
-
-
 
         public MongoDbAccessLayer(IDbSetting settings, DbConnectionString dbConnectionString)
         {
@@ -48,55 +45,62 @@ namespace SearchEngine.DB
 
         public List<Form> GetForms()
         {
-            List<Form> forms = new List<Form>();
-            lock (formsLock)
+            try
             {
-                 forms = (from form in _forms.AsQueryable() select form).ToList();
+                return (from form in _forms.AsQueryable() select form).ToList();
             }
-            return forms;
+            catch { throw; }
+
         }
 
         public Form GetForm(string id)
         {
-            return (from form in _forms.AsQueryable() where form.Id==id select form).FirstOrDefault();
-        }
-
-        public List<Submission> GetSubmissions(List<string> ids)
-        {
-            var filter = Builders<Submission>.Filter.In(x => x.Id, ids);
-            return _submissions.Find(filter).ToList();
-        }
-
-        public List<InputType> GetTypes()
-        {
-            List<InputType> inputTypes=new List<InputType>();
             try
             {
-                var result = (from type in _inputTypes.AsQueryable() select type).ToList();
-                return result;
-            }
-            catch  { throw; }
-        }
-
-        public bool SaveForm(Form form)
-        {
-            try
-            {
-                _forms.InsertOneAsync(form);
-                return true;
+                return (from form in _forms.AsQueryable() where form.Id == id select form).FirstOrDefault();
             }
             catch { throw; }
         }
 
-        public bool SaveSubmission(string id, Submission submission)
+        public List<Submission> GetSubmissions(List<string> ids)
         {
             try
             {
-                var submissionResult = _submissions.InsertOneAsync(submission);
+                var filter = Builders<Submission>.Filter.In(x => x.Id, ids);
+                return _submissions.Find(filter).ToList();
+            }
+            catch { throw; }
+        }
+
+        public List<InputType> GetTypes()
+        {
+            try
+            {
+                return (from type in _inputTypes.AsQueryable() select type).ToList();
+            }
+            catch  { throw; }
+        }
+
+        public async Task<Form> SaveForm(Form form)
+        {
+            try
+            {
+                await _forms.InsertOneAsync(form);
+                return form;
+            }
+            catch { throw; }
+
+        }
+
+        public async Task<Submission> SaveSubmission(string id, Submission submission)
+        {
+            try
+            {
+                await _submissions.InsertOneAsync(submission);
                 var filter = Builders<Form>.Filter.Eq(e => e.Id, id);
                 var update = Builders<Form>.Update.Push<string>(e => e.Submissions_Ids, submission.Id);
-                _forms.FindOneAndUpdateAsync(filter, update);
-                return true;
+                await _forms.FindOneAndUpdateAsync(filter, update);
+                return submission;
             }
             catch { throw; }
         }

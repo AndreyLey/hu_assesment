@@ -17,65 +17,95 @@ namespace Form_Builder.Services
             Console.WriteLine("Form Manager Service Initialized");
         }
 
-        public  async Task<Form> GetFormById(string id)
+        public  Form GetFormById(string id)
         {
-            if (!String.IsNullOrEmpty(id))
+            try
             {
-                var form = _dBAccessLayer.GetForm(id);
-
                 Console.WriteLine("In Get Form by Id Manager ");
-                return form;
+                if (!String.IsNullOrEmpty(id))
+                {
+                    var form = _dBAccessLayer.GetForm(id);
+
+                    Console.WriteLine("In Get Form by Id Manager ");
+                    return form;
+                }
+                else
+                    return null;
             }
-            else
+            catch(Exception e) 
+            {
+                Console.WriteLine($"Exception while Get Form by Id: {e}");
                 return null;
+            }
+
         }
 
         public List<FormSummaryResponse> GetFormsSummary()
         {
-            var forms = _dBAccessLayer.GetForms();
             List<FormSummaryResponse> formsSummaryResponse = new List<FormSummaryResponse>();
-
-            Console.WriteLine("In Get Form Manager");
-            forms.ForEach(form=>
-                formsSummaryResponse.Add(new FormSummaryResponse()
-                {
-                    Id = form.Id,
-                    FormName = form.Form_name,
-                    Submissions = form.Submissions_Ids.Count()
-                })
-            );
-
-            return formsSummaryResponse;
-        }
-
-        public FormSummaryResponse GetFormSummaryById(string id)
-        {
-            if (!String.IsNullOrEmpty(id))
+            try
             {
-                var form = _dBAccessLayer.GetForm(id);
-
                 Console.WriteLine("In Get Form Manager");
-                return new FormSummaryResponse()
+
+                var forms = _dBAccessLayer.GetForms();
+
+                forms.ForEach(form =>
+                    formsSummaryResponse.Add(new FormSummaryResponse()
                     {
                         Id = form.Id,
                         FormName = form.Form_name,
                         Submissions = form.Submissions_Ids.Count()
-                    };                   
+                    })
+                );
             }
-            else
-                return null;
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception while GetFormsSummary: {e}");
+            }
+            return formsSummaryResponse;
+
         }
 
-        public List<Submission> GetSubmissions()
+        public FormSummaryResponse GetFormSummaryById(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (!String.IsNullOrEmpty(id))
+                {
+                    var form = _dBAccessLayer.GetForm(id);
+
+                    Console.WriteLine("In Get Form Manager");
+                    return new FormSummaryResponse()
+                    {
+                        Id = form.Id,
+                        FormName = form.Form_name,
+                        Submissions = form.Submissions_Ids.Count()
+                    };
+                }
+                else
+                    return null;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Exception while GetFormsSummaryById: {e}");
+                return null;
+            }
+
         }
 
         public List<Submission> GetSubmissionsByFormId(string id)
         {
-            Console.WriteLine("In Get Submissions By FormId");
-            var submissionIds = _dBAccessLayer.GetForm(id).Submissions_Ids;
-            var submissionsById = _dBAccessLayer.GetSubmissions(submissionIds);
+            List<Submission> submissionsById = new List<Submission>();
+            try
+            {
+                Console.WriteLine("In Get Submissions By FormId");
+                var submissionIds = _dBAccessLayer.GetForm(id).Submissions_Ids;
+                submissionsById = _dBAccessLayer.GetSubmissions(submissionIds);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Exception while GetSubmissionsByFormId: {e}");
+            }
             return submissionsById;
         }
 
@@ -89,33 +119,38 @@ namespace Form_Builder.Services
             }
             catch(Exception e)
             {
-                Console.Write($"GetTypes: {e}");
+                Console.Write($"Exxception while GetTypes: {e}");
             }
             return types;
         }
 
-        public bool SaveForm(Form form)
+        public async Task SaveForm(Form form)
         {
             try
             {
-               return  _dBAccessLayer.SaveForm(form);
+               await _dBAccessLayer.SaveForm(form);
             }
             catch (Exception e)
             {
-                Console.Write($"Save Form: {e}");
-                return false;
+                Console.Write($"Exception while Save Form: {e}");
             }
         }
 
-        public bool SaveSubmission(string id, Submission submission)
+        public async Task SaveSubmission(string id, Submission submission)
         {
-            Console.WriteLine("In Save Submissions");
-            if(!String.IsNullOrEmpty(id) && submission != null)
+            try
             {
-                _dBAccessLayer.SaveSubmission(id, submission);
-                return true;
+                Console.WriteLine("In Save Submissions");
+                if (!String.IsNullOrEmpty(id) && submission != null)
+                {
+                    await _dBAccessLayer.SaveSubmission(id, submission);
+                }
             }
-            return false;
+            catch(Exception e)
+            {
+                Console.Write($"Exception while SaveSubmission: {e}");
+
+            }
         }
     }
 }

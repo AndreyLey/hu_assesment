@@ -13,8 +13,8 @@ namespace Form_Builder.DB
         List<InputType> GetTypes();
         List<Form> GetForms();
         Form GetForm(string id);
-        bool SaveForm(Form form);
+        Task<Form> SaveForm(Form form);
         List<Submission> GetSubmissions(List<string> ids);
-        bool SaveSubmission(string id, Submission submission);
+        Task<Submission> SaveSubmission(string id, Submission submission);
     }
 }

@@ -12,13 +12,11 @@ namespace Form_Builder.Services
     public interface IFormManager
     {
         List<InputType> GetTypes();
-        Task<Form> GetFormById(string id);
+        Form GetFormById(string id);
         FormSummaryResponse GetFormSummaryById(string id);
         List<FormSummaryResponse> GetFormsSummary();
-        bool SaveForm(Form form);
-        List<Submission> GetSubmissions();
-        bool SaveSubmission(string id, Submission submission);
-
+        Task SaveForm(Form form);
+        Task SaveSubmission(string id, Submission submission);
         List<Submission> GetSubmissionsByFormId(string id);
     }
 }

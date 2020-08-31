@@ -26,7 +26,7 @@ namespace Form_Builder.Controllers
         [HttpGet ("forms/{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            return new JsonResult(await _formManager.GetFormById(id));
+            return new JsonResult(_formManager.GetFormById(id));
         }
 
         // GET
@@ -38,16 +38,16 @@ namespace Form_Builder.Controllers
 
         // POST
         [HttpPost("forms")]
-        public void Post([FromBody] Form form)
+        public async void Post([FromBody] Form form)
         {
-            _formManager.SaveForm(form);
+            await _formManager.SaveForm(form);
         }
 
         // PUT
         [HttpPut("forms/{id}/submission")]
-        public void Put( string id, [FromBody] Submission value)
+        public async void Put( string id, [FromBody] Submission value)
         {
-            _formManager.SaveSubmission(id, value);
+            await _formManager.SaveSubmission(id, value);
 
         }
 
