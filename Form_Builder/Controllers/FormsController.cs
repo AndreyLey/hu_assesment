@@ -24,7 +24,7 @@ namespace Form_Builder.Controllers
 
         // GET: forms/1
         [HttpGet ("forms/{id}")]
-        public async Task<IActionResult> Get(string id)
+        public IActionResult Get(string id)
         {
             return new JsonResult(_formManager.GetFormById(id));
         }

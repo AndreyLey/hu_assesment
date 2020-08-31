@@ -1,24 +1,11 @@
-version: '3'
+version: '3.5'
 services:
 
-  forms-fe:
-    image: andreyley/forms_fe:1.0.0
-    container_name: forms_fe
-
-    ports:
-      - "3000:3000"
-    # volumes:
-      # - '.:/app'
-      # - '/app/node_modules'
-    networks:
-      - forms-network
-    depends_on:
-      - forms-be
-    stdin_open: true
-      
   forms-be:
-    image: andreyley/forms_be:1.0.0
-    container_name: forms_be
+    container_name: forms-be
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
       - DB_HOST=mongo
       - DB_PORT=27017
@@ -46,9 +33,9 @@ services:
       
 networks:
   forms-network:
+    name: forms-network
     ipam:
       driver: default
       config:
-        - subnet: 192.168.0.0/24        
-  
+        - subnet: 192.168.0.0/24
         
